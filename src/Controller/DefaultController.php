@@ -7,14 +7,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
+     /**
+     * @Route("/", name="redirect")
+     */
+    public function redirectAction()
+    {
+        return $this->redirectToRoute('default');
+    }
+    
     /**
-     * @Route("/", name="default")
+     * @Route("/hello", name="default")
      */
     public function index()
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/DefaultController.php',
+        return $this->render('default/index.html.twig', [
+            'controller_name' => 'DefaultController',
         ]);
     }
 }
