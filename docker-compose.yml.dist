@@ -18,5 +18,7 @@ services:
             APACHE_RUN_USER: $USER
             APACHE_RUN_GROUP: $USER
             PHP_MEMORY_LIMIT: 512M
+        env_file:
+            - .env
         tty: true
         working_dir: /home/app
