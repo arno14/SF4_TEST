@@ -1,0 +1,22 @@
+# The users of the host machine are shared with the ones of the container
+# and the apache server run with the current host user ($USER)
+# this avoid grant conflict if you run the command in the container with:
+#   docker-compose exec -u `echo $UID` app /bin/bash
+version: '3'
+services:
+    app:     
+        build: ./docker/front
+        ports:
+            - 8030:80
+        volumes:
+            - .:/home/app    
+            - /home/$USER:/home/$USER
+            - /etc/passwd:/etc/passwd:ro
+            - /etc/group:/etc/group:ro
+        environment:
+            APACHE_DOCUMENT_ROOT: /home/app/public
+            APACHE_RUN_USER: $USER
+            APACHE_RUN_GROUP: $USER
+            PHP_MEMORY_LIMIT: 512M
+        tty: true
+        working_dir: /home/app
