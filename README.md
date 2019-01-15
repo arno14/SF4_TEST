@@ -7,6 +7,8 @@ cp docker-compose.yml.dist docker-compose.yml
 docker-compose up -d
 docker-compose exec -u `echo $UID` app composer install
 docker-compose exec -u `echo $UID` app /bin/bash
+
+composer require make annotation
 ```
 
 ### creation process of this project###
