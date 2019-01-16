@@ -1,0 +1,34 @@
+App\Entity\Category:
+    sf:
+        name: SF
+    pol:
+        name: Policier
+    dr:
+        name: Drame
+    com:
+        name: Comic
+
+App\Entity\Author:
+    author_{1..10}: 
+        firstName: <firstName()>
+        lastName: <lastName()>
+        birthDate: <datetimeBetween('1950-01-01', '1990-01-01')>
+        deathDate: 50%? <datetimeBetween('1990-01-01', '2010-01-01')>
+#        __calls:
+#            - setDeathDate (50%?): [ <datetime()> ]
+
+
+App\Entity\Book:
+    book_{1..20}:
+        title: <sentence(5, true)>
+        publicationDate: <datetime()>
+        author: '@author_*'
+        ISBN: <numberBetween(1000,9999)>
+        __calls:
+            - addCategory (35%?): ['@sf']            
+            - addCategory (35%?): ['@pol']
+            - addCategory (35%?): ['@dr']            
+            - addCategory (35%?): ['@com']
+#            - addCategory (50%?): [ <randomElement(['@sf','@pol'])> ]
+#            - addCategory (50%?): [ '<randomElement([@sf,@pol])>' ]
+    
