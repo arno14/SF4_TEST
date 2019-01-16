@@ -15,6 +15,8 @@ RUN curl --silent --show-error https://getcomposer.org/installer | php  && \
 
 RUN a2enmod rewrite
 
+RUN docker-php-ext-install pdo_mysql
+
 # php configuration variables
 ENV PHP_DATETIME_ZONE Europe/Paris
 ENV PHP_MEMORY_LIMIT  128M
