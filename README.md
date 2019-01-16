@@ -6,9 +6,13 @@ git clone
 cp docker-compose.yml.dist docker-compose.yml
 docker-compose up -d
 docker-compose exec -u `echo $UID` app composer install
-docker-compose exec -u `echo $UID` app /bin/bash
 
-composer require make annotation
+docker-compose exec -u `echo $UID` node yarn install
+
+docker-compose exec -u `echo $UID` node yarn encore dev --watch
+# or
+docker-compose exec -u `echo $UID` node yarn encore dev-server --hot --host 0.0.0.0 --port 8032
+
 ```
 
 ### creation process of this project###

@@ -8,12 +8,17 @@
               href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
               integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" 
               crossorigin="anonymous">
+        {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
     <body>
         <div class="container">
+        <div id="app"></div>
+            
         {% block body %}{% endblock %}
         </div>
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     </body>
 </html>
