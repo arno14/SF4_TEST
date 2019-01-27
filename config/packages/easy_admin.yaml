@@ -1,0 +1,24 @@
+easy_admin:
+
+    entities:
+#        # List the entity class name you want to manage
+        Author:
+            class: App\Entity\Author            
+            form:
+                fields:
+                    - { property: 'firstName'}
+                    - { property: 'lastName' }
+                    - { property: 'birthDate' }
+                    - { property: 'deathDate' }
+                    - { property: 'books', type: 'easyadmin_autocomplete' }
+        Book:
+            class: App\Entity\Book            
+            form:
+                fields:
+                    - { property: 'title'}
+                    - { property: 'ISBN' }
+                    - { property: 'publicationDate' }
+                    - { property: 'categories' }
+                    - { property: 'author', type: 'easyadmin_autocomplete' }
+        Category:
+            class: App\Entity\Category

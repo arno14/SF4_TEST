@@ -9,7 +9,7 @@ App\Entity\Category:
         name: Comic
 
 App\Entity\Author:
-    author_{1..10}: 
+    author_{1..30}: 
         firstName: <firstName()>
         lastName: <lastName()>
         birthDate: <datetimeBetween('1950-01-01', '1990-01-01')>
@@ -19,7 +19,7 @@ App\Entity\Author:
 
 
 App\Entity\Book:
-    book_{1..20}:
+    book_{1..120}:
         title: <sentence(5, true)>
         publicationDate: <datetime()>
         author: '@author_*'

@@ -83,6 +83,15 @@
             "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
         }
     },
+    "easycorp/easyadmin-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "0a51040a43c6f2172a3a0135cd15daf2043905d7"
+        }
+    },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
         "recipe": {
@@ -130,6 +139,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.2.2"
+    },
+    "pagerfanta/pagerfanta": {
+        "version": "v2.0.1"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
@@ -222,6 +234,9 @@
         "version": "v4.2.2"
     },
     "symfony/event-dispatcher": {
+        "version": "v4.2.2"
+    },
+    "symfony/expression-language": {
         "version": "v4.2.2"
     },
     "symfony/filesystem": {
@@ -317,14 +332,38 @@
             "ref": "5374e24d508ba8fd6ba9eb15170255fdb778316a"
         }
     },
+    "symfony/security-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "f8a63faa0d9521526499c0a8f403c9964ecb0527"
+        }
+    },
     "symfony/security-core": {
         "version": "v4.2.2"
     },
     "symfony/security-csrf": {
         "version": "v4.2.2"
     },
+    "symfony/security-guard": {
+        "version": "v4.2.2"
+    },
+    "symfony/security-http": {
+        "version": "v4.2.2"
+    },
     "symfony/stopwatch": {
         "version": "v4.2.2"
+    },
+    "symfony/translation": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "1fb02a6e1c8f3d4232cce485c9afa868d63b115a"
+        }
     },
     "symfony/twig-bridge": {
         "version": "v4.2.2"
@@ -381,6 +420,15 @@
             "branch": "master",
             "version": "1.0",
             "ref": "fe5a50faf580eb58f08ada2abe8afbd2d4941e05"
+        }
+    },
+    "twig/extensions": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "ddb2e0a77773b7fd75d8d649545f174e664500ab"
         }
     },
     "twig/twig": {
