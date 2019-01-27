@@ -18,7 +18,31 @@ services:
             APACHE_RUN_USER: $USER
             APACHE_RUN_GROUP: $USER
             PHP_MEMORY_LIMIT: 512M
+        tmpfs:
+            - /home/var/
         env_file:
             - .env
         tty: true
         working_dir: /home/app
+    node:
+        image: node
+        volumes:
+            - .:/home/app    
+            - /home/$USER:/home/$USER
+            - /etc/passwd:/etc/passwd:ro
+            - /etc/group:/etc/group:ro
+        command: ['node']
+        tty: true
+        working_dir: /home/app
+    database:
+        image: mysql:5.7
+        volumes:  
+            - ./mysql_datadir:/var/lib/mysql
+        env_file:
+            - .env
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        env_file:
+            - .env
+        ports:
+            - 8031:80
