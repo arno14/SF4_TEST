@@ -13,8 +13,18 @@
 
     This friendly message is coming from:
     <ul>
+
         <li>Your controller at <code><a href="{{ '/home/app/src/Controller/DefaultController.php'|file_link(0) }}">src/Controller/DefaultController.php</a></code></li>
         <li>Your template at <code><a href="{{ '/home/app/templates/default/index.html.twig'|file_link(0) }}">templates/default/index.html.twig</a></code></li>
+		<li>
+			<a href="{{url('easyadmin')}}">Access Easy admin</a>
+		</li>
+		<li>
+			<a href="{{url('api_entrypoint')}}">Access API</a>
+		</li>
+		<li>
+			<a href="{{url('book_index')}}">Access custom Book pages</a> | <a href="{{url('author_index')}}">Access custom Author pages</a>
+		</li>
     </ul>
 </div>
 {% endblock %}
