@@ -25,4 +25,13 @@ class DefaultController extends AbstractController
             'controller_name' => 'DefaultController',
         ]);
     }
+    
+     /**
+      * Single Page application
+     * @Route("/spa", name="spa_app")
+     */
+    public function app()
+    {
+        return $this->render('default/spa_app.html.twig');
+    }
 }
