@@ -16,16 +16,19 @@ services:
         environment:
             APACHE_DOCUMENT_ROOT: /home/app/public
             APACHE_RUN_USER: $USER
-            APACHE_RUN_GROUP: $USER
+            APACHE_RUN_GROUP: $USER    
             PHP_MEMORY_LIMIT: 512M
         tmpfs:
-            - /home/var/
+            - /home/var/cache
         env_file:
             - .env
         tty: true
         working_dir: /home/app
     node:
         image: node
+        ports:
+            # if serving asset via webpack dev server
+            - 8032:8032
         volumes:
             - .:/home/app    
             - /home/$USER:/home/$USER
@@ -34,10 +37,12 @@ services:
         command: ['node']
         tty: true
         working_dir: /home/app
+        command: [ "/bin/bash" ]
     database:
-        image: mysql:5.7
+        image: mysql/mysql-server:5.7
         volumes:  
-            - ./mysql_datadir:/var/lib/mysql
+            - ./var/lib_mysql:/var/lib/mysql
+            - ./var/etc_mysql:/etc/mysql
         env_file:
             - .env
     phpmyadmin:
@@ -46,3 +51,5 @@ services:
             - .env
         ports:
             - 8031:80
+        env_file:
+            - .env

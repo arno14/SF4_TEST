@@ -1,3 +1,9 @@
+### Sample application ###
+using :
+- Symfony 4.2
+- docker
+- webpack / Encore /vue.js
+
 
 ### running this project ###
 
