@@ -11,7 +11,7 @@ using :
 git clone
 cp docker-compose.yml.dist docker-compose.yml
 docker-compose up -d
-docker-compose exec -u `echo $UID` app composer install
+docker-compose exec -u `echo $UID` phpapache composer install
 
 docker-compose exec -u `echo $UID` node yarn install
 
@@ -19,9 +19,9 @@ docker-compose exec -u `echo $UID` node yarn encore dev --watch
 # or
 docker-compose exec -u `echo $UID` node yarn encore dev-server --hot --host 0.0.0.0 --port 8032
 
-docker-compose exec -u `echo $UID` app bin/console doctrine:schema:update --force
+docker-compose exec -u `echo $UID` phpapache bin/console doctrine:schema:update --force
 
-docker-compose exec -u `echo $UID` app bin/console hautelook:fixtures:load
+docker-compose exec -u `echo $UID` phpapache bin/console hautelook:fixtures:load
 
 ```
 
