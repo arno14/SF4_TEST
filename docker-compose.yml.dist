@@ -4,8 +4,31 @@
 #   docker-compose exec -u `echo $UID` app /bin/bash
 version: '3'
 services:
-    app:     
-        build: ./docker/front
+    apache:
+        image: httpd:2.4
+        ports:
+            - 8034:80
+        volumes:
+            # enable modules proxy_http, proxy_fcgi, etc... 
+            # redirect .php request to phpfpm container port 9000
+            # other requests (for static files as css) are directly hosted by this container
+            - ./docker/apache_fpm_config/httpd.conf:/usr/local/apache2/conf/httpd.conf
+            - ./public:/usr/local/apache2/htdocs/
+    phpfpm:
+        build: ./docker/phpfpm     
+        volumes:
+            - .:/home/app    
+            - /home/$USER:/home/$USER
+            - /etc/passwd:/etc/passwd:ro
+            - /etc/group:/etc/group:ro
+        tmpfs:
+            - /home/var/cache
+        env_file:
+            - .env
+        tty: true
+        working_dir: /home/app
+    phpapache:     
+        build: ./docker/phpapache
         ports:
             - 8030:80
         volumes:
