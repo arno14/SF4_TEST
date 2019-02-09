@@ -1,6 +1,7 @@
 /docker-compose.yml
 /*.*~
 /nbproject
+/mysql_datadir
 
 ###> symfony/framework-bundle ###
 /.env.local

@@ -40,6 +40,11 @@
                     <div>
                         ISBN: <span v-text="focusedBook.ISBN"></span>
                     </div>
+                    <div>
+                        Categories: 
+                        <span v-for="cat in focusedBook.categories" v-text="cat.name" v-bind:title="cat.id" class="badge">                            
+                        </span>
+                    </div>
                 </div>                
                 <pre v-text="JSON.stringify(focusedBook, null, '\t')"></pre>
             </div>
