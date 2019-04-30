@@ -17,16 +17,25 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AuthorController extends AbstractController
 {
+    /**
+     * @var AuthorRepository
+     */
+    private $authorRepository;
+
+    public function __construct(AuthorRepository $authorRepository)
+    {
+        $this->authorRepository= $authorRepository;
+    }
 
     /**
      * @Route("/", name="author_index", methods={"GET"})
      */
-    public function index(AuthorRepository $authorRepository, Request $request): Response
+    public function index(Request $request): Response
     {
         $offset = $request->get('offset', 0);
         $limit = $request->get('limit', 10);
 
-        $query = $authorRepository->createQueryBuilder('b')
+        $query = $this->authorRepository->createQueryBuilder('b')
                 ->setMaxResults($limit)
                 ->setFirstResult($offset);
 
