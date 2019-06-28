@@ -38,4 +38,5 @@ docker-compose exec -u `echo $UID` app /bin/bash
     composer create-project symfony/skeleton ./
     mv /tmp/docker ./docker 
     mv /tmp/docker-compose.yml ./docker-compose.yml 
+    composer require make annotation twig doctrine alice logger debug apache-pack form symfony/webpack-encore-bundle admin api 
 ```

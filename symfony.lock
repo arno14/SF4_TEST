@@ -104,6 +104,9 @@
             "ref": "0a51040a43c6f2172a3a0135cd15daf2043905d7"
         }
     },
+    "fig/link-util": {
+        "version": "1.0.0"
+    },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
         "recipe": {
@@ -127,6 +130,9 @@
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "jean85/pretty-package-versions": {
+        "version": "1.2"
     },
     "monolog/monolog": {
         "version": "1.24.0"
@@ -152,6 +158,30 @@
             "ref": "f0436fc35fca88eada758311f8de43bfb61f1980"
         }
     },
+    "nette/bootstrap": {
+        "version": "v3.0.0"
+    },
+    "nette/di": {
+        "version": "v3.0.0"
+    },
+    "nette/finder": {
+        "version": "v2.5.0"
+    },
+    "nette/neon": {
+        "version": "v3.0.0"
+    },
+    "nette/php-generator": {
+        "version": "v3.2.2"
+    },
+    "nette/robot-loader": {
+        "version": "v3.2.0"
+    },
+    "nette/schema": {
+        "version": "v1.0.0"
+    },
+    "nette/utils": {
+        "version": "v3.0.1"
+    },
     "nikic/php-parser": {
         "version": "v4.2.0"
     },
@@ -176,17 +206,23 @@
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
     },
+    "phpstan/phpdoc-parser": {
+        "version": "0.3.5"
+    },
+    "phpstan/phpstan": {
+        "version": "0.11.8"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/link": {
+        "version": "1.0.0"
+    },
     "psr/log": {
         "version": "1.1.0"
-    },
-    "psr/simple-cache": {
-        "version": "1.0.1"
     },
     "sebastian/comparator": {
         "version": "3.0.2"
@@ -317,6 +353,9 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/mime": {
+        "version": "v4.3.2"
+    },
     "symfony/monolog-bridge": {
         "version": "v4.2.2"
     },
@@ -338,11 +377,17 @@
     "symfony/polyfill-intl-icu": {
         "version": "v1.10.0"
     },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.11.0"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.10.0"
     },
     "symfony/polyfill-php72": {
         "version": "v1.10.0"
+    },
+    "symfony/polyfill-php73": {
+        "version": "v1.11.0"
     },
     "symfony/process": {
         "version": "v4.2.2"
@@ -427,6 +472,9 @@
     },
     "symfony/var-exporter": {
         "version": "v4.2.2"
+    },
+    "symfony/web-link": {
+        "version": "v4.2.10"
     },
     "symfony/web-profiler-bundle": {
         "version": "3.3",
