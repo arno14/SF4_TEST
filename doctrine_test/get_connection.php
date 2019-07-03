@@ -20,15 +20,11 @@ class CustomSQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
 {
     public function startQuery($sql, array $params = null, array $types = null)
     {
-        // $log = str_replace('?','%s',$sql);
-        // $log = call_user_func_array('sprintf', array_merge([$log], (array) $params));
-        // echo PHP_EOL, ' - execute SQL "',$log,'"';
-
-        echo PHP_EOL,"' [[[execute SQL: '$sql'";
+        echo PHP_EOL," [[execute SQL: '$sql'";
         if ($params) {
             echo "' with params '",str_replace("\n",' ',print_r($params,true)),"'";
         }
-        echo ']]] ';
+        echo ']] ';
     }
 
     public function stopQuery()
