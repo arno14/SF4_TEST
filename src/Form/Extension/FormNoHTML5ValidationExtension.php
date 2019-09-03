@@ -7,8 +7,10 @@ use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FormExtension extends AbstractTypeExtension
+class FormNoHTML5ValidationExtension extends AbstractTypeExtension
 {
     public static function getExtendedTypes():iterable
     {
@@ -25,5 +27,15 @@ class FormExtension extends AbstractTypeExtension
         }
 
         $view->vars['attr']['novalidate']='novalidate';//désactivation validation JS
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        // echo '<br/>     configureOptions CustomFormExtension';
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        // echo '<br/>buildForm CustomFormExtension, name=', $builder->getName();
     }
 }

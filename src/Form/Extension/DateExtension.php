@@ -24,11 +24,15 @@ class DateExtension extends AbstractTypeExtension
     }
 
     public function configureOptions(OptionsResolver $resolver)
-    {        
+    { 
+        // return;       
         $resolver->setDefaults([
             'html5'=>false,
             'widget'=>'single_text',
-            'format'=>$this->dateFormat
+            'format'=>$this->dateFormat,
+            'attr'=>[
+                'title'=>'Please fill date as format '.$this->dateFormat
+            ]
         ]);
     }
 }
