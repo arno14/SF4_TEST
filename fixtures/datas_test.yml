@@ -20,7 +20,7 @@ App\Entity\Author:
 
 App\Entity\Book:
     book_{1..120}:
-        title: <sentence(4, true)>
+        title: <sentence(2, true)>
         publicationDate: <datetime()>
         author: '@author_*'
         ISBN: <numberBetween(1000,9999)>
