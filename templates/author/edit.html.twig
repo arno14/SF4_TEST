@@ -2,12 +2,73 @@
 
 {% block title %}Edit Author{% endblock %}
 
+{% form_theme form _self 'bootstrap_4_horizontal_layout.html.twig' %}
+
 {% block body %}
+
     <h1>Edit Author</h1>
 
-    {{ include('author/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ form_start(form) }}
 
-    <a href="{{ path('author_index') }}">back to list</a>
+    {{ form_widget(form) }}
 
-    {{ include('author/_delete_form.html.twig') }}
+    <div class="btn-group col-sm-10 offset-sm-2">
+        <button class="btn btn-secondary">{{ (author.id)?'Save':'Create' }}</button>
+        {% if app.request.get('form_mode') == 'include_books_forms' %}
+            <a class="btn btn-secondary"  href="{{ path('author_edit', {'id': author.id }) }}"> Edit basic</a>
+        {% else %}
+            <a class="btn btn-secondary"  href="{{ path('author_edit', {'id': author.id, 'form_mode':'include_books_forms' }) }}"> Edit with books</a>
+        {% endif %}
+        <a class="btn btn-secondary" href="{{ path('author_index') }}">Back to list</a>
+        {% if author.id %}
+            <a class="btn btn-secondary" href="{{ path('author_show', {'id': author.id}) }}">Show</a>
+        {% endif %}
+    </div>
+
+    {{ form_end(form) }}
+
+    <div class="row">&nbsp;</div>
+
+{% endblock %}
+
+
+{% block _author_books_entry_row %}
+
+    <div class="form-group row" id="{{id}}">
+        <legend class="col-form-label col-sm-1 col-form-label required">
+            <button type="button"
+                onclick="this.parentElement.parentElement.parentElement.removeChild(this.parentElement.parentElement)">Remove</button>
+        </legend>
+        <div class="col-sm-11">
+            {{form_widget(form)}}
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script type="text/javascript">
+
+        function addItem(container) {
+            var prototype = container.getAttribute('data-prototype'),
+                newIndex = container.children.length,
+                newItem = prototype.replace(/__name__/g, newIndex);
+            container.innerHTML += newItem;
+        }
+
+        document.querySelectorAll('[data-prototype]').forEach(function (container) {
+
+            var button = document.createElement('button');
+            button.setAttribute('type', 'button');
+            button.innerHTML = 'Add an item';
+
+            container.parentNode.insertBefore(button, container.sibbling);
+
+            button.addEventListener('click', function () {
+                addItem(container);
+            });
+
+        });
+    </script>
 {% endblock %}

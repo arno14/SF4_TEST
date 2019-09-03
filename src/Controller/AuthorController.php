@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Author;
 use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use PDO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,30 +51,7 @@ class AuthorController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="author_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $author = new Author();
-        $form = $this->createForm(AuthorType::class, $author);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($author);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('author_index');
-        }
-
-        return $this->render('author/new.html.twig', [
-                    'author' => $author,
-                    'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="author_show", methods={"GET"})
+     * @Route("/show/{id}", name="author_show", methods={"GET"})
      */
     public function show(Author $author): Response
     {
@@ -83,15 +61,26 @@ class AuthorController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="author_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="author_edit", methods={"GET","POST"}, requirements={"id":"\d+"}, defaults={ "id":null})
      */
-    public function edit(Request $request, Author $author): Response
+    public function edit(Request $request, EntityManagerInterface $em, Author $author = null ): Response
     {
-        $form = $this->createForm(AuthorType::class, $author);
+        if(!$author){
+            $author = new Author;
+        }
+
+        $form = $this->createForm(AuthorType::class, $author, [
+            'app_mode'=>$request->get('form_mode')
+        ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+
+            if(!$em->contains($author)){
+                $em->persist($author);
+            }
+            $em->flush();
 
             return $this->redirectToRoute('author_index', [
                         'id' => $author->getId(),
@@ -105,7 +94,7 @@ class AuthorController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="author_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="author_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Author $author): Response
     {
@@ -118,32 +107,5 @@ class AuthorController extends AbstractController
         return $this->redirectToRoute('author_index');
     }
 
-    /**
-     * @Route("/test/me", name="author_test")
-     */
-    public function test()
-    {
-        echo "memory usage=",memory_get_usage();
-        
-//        $pdo = new \PDO('mysql://db_user:db_pass@database:3306/sf_test');
-        $pdo = new PDO('mysql:host=database;dbname=sf_test', 'db_user', 'db_pass', [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]);
-//                
-//        $stmt = ;
-
-//        $results = $stmt->fetchAll();
-        $results = $pdo->query("SELECT * FROM author")->fetchAll();
-//        $results = $pdo->query("SELECT * FROM author");
-
-        foreach ($results as $row) {
-            print_r($row);
-        }
-        
-        echo "memory usage=",memory_get_usage();
-
-
-        return new Response('<html><head></head><body></body></html>');
-    }
-
+    
 }

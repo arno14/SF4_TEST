@@ -3,11 +3,30 @@
 {% block title %}Edit Book{% endblock %}
 
 {% block body %}
+
     <h1>Edit Book</h1>
 
-    {{ include('book/_form.html.twig', {'button_label': 'Update'}) }}
+    {%  form_theme form 'bootstrap_4_horizontal_layout.html.twig'  %}
 
-    <a href="{{ path('book_index') }}">back to list</a>
+    {{ form_start(form) }}
 
-    {{ include('book/_delete_form.html.twig') }}
+    {{ form_widget(form) }}
+    
+        <div class="btn-group col-sm-10 offset-sm-2">
+            <button class="btn btn-secondary">{{ (book.id)?'Save':'Create' }}</button>
+            {% if app.request.get('form_mode') == 'include_author_form' %}
+                <a class="btn btn-secondary"  href="{{ path('book_edit', {'id': book.id }) }}"> Edit Basic</a>
+            {% else %}
+                <a class="btn btn-secondary"  href="{{ path('book_edit', {'id': book.id, 'form_mode':'include_author_form' }) }}"> Edit with author</a>
+            {% endif %}
+            <a class="btn btn-secondary" href="{{ path('book_index') }}">Back to list</a>
+            {% if book.id %}
+                <a class="btn btn-secondary" href="{{ path('book_show', {'id': book.id}) }}">Show</a>
+            {% endif %}
+        </div>
+
+    {{ form_end(form) }}
+
+    <div class="btn-group col-sm-10 offset-sm-2">&nbsp;</div>
+
 {% endblock %}

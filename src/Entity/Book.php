@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
@@ -29,6 +30,7 @@ class Book
     private $title;
 
     /**
+     * @Assert\NotNull
      * @ORM\Column(type="date")
      */
     private $publicationDate;
@@ -51,7 +53,7 @@ class Book
 
     public function __toString()
     {
-        return $this->getTitle();
+        return (string)$this->getTitle();
     }
     
     public function __construct()
@@ -82,7 +84,7 @@ class Book
         return $this->publicationDate;
     }
 
-    public function setPublicationDate(\DateTimeInterface $publicationDate): self
+    public function setPublicationDate(\DateTimeInterface $publicationDate = null): self
     {
         $this->publicationDate = $publicationDate;
 

@@ -3,7 +3,17 @@
 {% block title %}Author index{% endblock %}
 
 {% block body %}
-    <h1>Author index</h1>
+
+    <h1>Author index ({{authors | length }})</h1>
+
+    <div class="btn-group col-sm-12">       
+        <a class="btn btn-secondary" href="{{path('book_index') }}">Book List</a>
+        <a class="btn btn-secondary" href="{{ path('author_edit') }}">Create new Author </a>
+        {% if app.request.get('offset') >= 10 %}
+        <a class="btn btn-secondary" href="?offset={{ offset-limit }}">Previous</a>
+        {% endif %}
+        <a class="btn btn-secondary" href="?offset={{ offset+limit }}">Next</a>
+    </div>
 
     <table class="table">
         <thead>
@@ -14,7 +24,7 @@
                 <th>BirthDate</th>
                 <th>DeathDate</th>
                 <th>Books</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -26,9 +36,9 @@
                 <td>{{ author.birthDate ? author.birthDate|date('Y-m-d') : '' }}</td>
                 <td>{{ author.deathDate ? author.deathDate|date('Y-m-d') : '' }}</td>
                 <td>{{ author.books | join(', ') }}</td>
-                <td>
-                    <a href="{{ path('author_show', {'id': author.id}) }}">show</a>
-                    <a href="{{ path('author_edit', {'id': author.id}) }}">edit</a>
+                <td class="btn-group">
+                    <a class="btn btn-secondary" href="{{ path('author_show', {'id': author.id }) }}">show</a>
+                    <a class="btn btn-secondary" href="{{ path('author_edit', {'id': author.id }) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -39,8 +49,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('author_new') }}">Create new</a>
-    
-    <a href="?offset={{ offset-limit }}">prev</a>
-    <a href="?offset={{ offset+limit }}">next</a>
 {% endblock %}

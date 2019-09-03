@@ -43,7 +43,7 @@ class Author
     private $deathDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Book", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="App\Entity\Book", mappedBy="author", cascade="persist")
      */
     private $books;
 

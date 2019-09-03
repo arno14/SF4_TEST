@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Form\BookType;
 use App\Repository\BookRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,45 +21,33 @@ class BookController extends AbstractController
     /**
      * @Route("/", name="book_index", methods={"GET"})
      */
-    public function index(BookRepository $bookRepository): Response
+    public function index(BookRepository $bookRepository, Request $request): Response
     {
-        $books = $bookRepository->createQueryBuilder('b')
-                ->addSelect('a,c')
-                ->leftJoin('b.author', 'a')
-                ->leftJoin('b.categories', 'c')
-                ->getQuery()
-                ->getResult();
-        
-        return $this->render('book/index.html.twig', [
-            'books' => $books,
-        ]);
-    }
+        $offset = $request->get('offset', 0);
+        $limit = $request->get('limit', 10);
 
-    /**
-     * @Route("/new", name="book_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $book = new Book();
-        $form = $this->createForm(BookType::class, $book);
-        $form->handleRequest($request);
+        $query = $bookRepository->createQueryBuilder('b')
+            ->addSelect('a,c')
+            ->leftJoin('b.author', 'a')
+            ->leftJoin('b.categories', 'c')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($book);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('book_index');
+        if ($term = $request->get('term')) {
+            $query->andWhere('b.title LIKE :term')->setParameter('term', '%' . $term . '%');
         }
 
-        return $this->render('book/new.html.twig', [
-            'book' => $book,
-            'form' => $form->createView(),
+        $books = new Paginator($query, true);
+
+        return $this->render('book/index.html.twig', [
+            'books' => $books,
+            'offset' => $offset,
+            'limit' => $limit
         ]);
     }
 
     /**
-     * @Route("/{id}", name="book_show", methods={"GET"})
+     * @Route("/show/{id}", name="book_show", methods={"GET"})
      */
     public function show(Book $book): Response
     {
@@ -65,16 +56,38 @@ class BookController extends AbstractController
         ]);
     }
 
+
     /**
-     * @Route("/{id}/edit", name="book_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="book_edit", methods={"GET","POST"}, requirements={"id":"\d+"}, defaults={ "id":null} )
      */
-    public function edit(Request $request, Book $book): Response
+    public function edit(Request $request, EntityManagerInterface $em, Book $book = null): Response
     {
-        $form = $this->createForm(BookType::class, $book);
+        if (!$book) {
+            $book = new Book;
+        }
+
+        $form = $this->createForm(BookType::class, $book, [
+            'app_mode' => $request->get('form_mode')
+        ]);
+
+        // $form = $this->createForm(FormType::class, $book);
+        // $form->add('title')
+        //     ->add('publicationDate')
+        //     ->add('ISBN')
+        //     ->add('author')
+        //     ->add('categories', null, ['expanded' => true])
+        //     ;
+
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+
+            if(!$book->getId()){
+                $em->persist($book);
+            }
+
+            $em->flush();
 
             return $this->redirectToRoute('book_index', [
                 'id' => $book->getId(),
@@ -88,11 +101,11 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="book_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="book_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Book $book): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$book->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $book->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($book);
             $entityManager->flush();
