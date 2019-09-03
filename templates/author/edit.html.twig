@@ -2,7 +2,11 @@
 
 {% block title %}Edit Author{% endblock %}
 
-{% form_theme form _self 'bootstrap_4_horizontal_layout.html.twig' %}
+{% form_theme form with [ 
+        'bootstrap_4_horizontal_layout.html.twig',  
+        _self 
+] %}
+
 
 {% block body %}
 
@@ -31,6 +35,27 @@
 
 {% endblock %}
 
+{% block date_widget %}
+    {%  if fa_icon is not defined %}
+        {% set fa_icon='calendar' %}
+    {% endif %}
+    <div class="input-group">
+        <span class="input-group-prepend">
+            <span class="input-group-text fa fa-{{ fa_icon}}"></span>
+        </span>
+        {{form_widget(form)}}
+    </div>
+{% endblock %}
+
+{# ordre de priorité pour le champ birthDate:
+    _self, block "_author_birthDate_widget"
+    _self, block "date_widget"
+    bootstrap_4_horizontal_layout.html.twig, block "date_widget"
+    etc...
+#}
+{% block _author_birthDate_widget %}
+    {{form_widget(form, {fa_icon:'birthday-cake'})}}
+{% endblock %}
 
 {% block _author_books_entry_row %}
 
