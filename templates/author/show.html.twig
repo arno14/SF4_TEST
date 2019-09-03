@@ -29,6 +29,10 @@
                 <td>{{ author.deathDate ? author.deathDate|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
+                <th>Emails</th>
+                <td>{{ author.emails | join(' - ') }}</td>
+                </tr>
+            <tr>
                 <th>Books</th>
                 <td>
                     {% for book in author.books %}

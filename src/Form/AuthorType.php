@@ -4,8 +4,10 @@ namespace App\Form;
 
 use App\Entity\Author;
 use App\Entity\Book;
+use App\Form\Transformer\ArrayToStringTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType as TextType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +22,10 @@ class AuthorType extends AbstractType
             ->add('lastName')
             ->add('birthDate')
             ->add('deathDate')
+            ->add('emails', TextType::class)
         ;
+
+        $builder->get('emails')->addModelTransformer(new ArrayToStringTransformer());
 
         if( 'include_books_forms' === $options['app_mode']){
             

@@ -42,10 +42,22 @@ class Author
      */
     private $deathDate;
 
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Book", mappedBy="author", cascade="persist")
      */
     private $books;
+
+    /**
+     * @ORM\Column(type="json_array", nullable=true)
+     * @Assert\All({
+     *      @Assert\Email( 
+     *          message = "{{ value }} is not a valid email address"
+     *      )
+     * })
+     */
+    private $emails = [];
+
 
     
     public function __toString()
@@ -139,6 +151,18 @@ class Author
                 $book->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEmails(): ?array
+    {
+        return $this->emails;
+    }
+
+    public function setEmails(?array $emails): self
+    {
+        $this->emails = $emails;
 
         return $this;
     }
