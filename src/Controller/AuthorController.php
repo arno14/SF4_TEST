@@ -7,7 +7,6 @@ use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use PDO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +24,7 @@ class AuthorController extends AbstractController
 
     public function __construct(AuthorRepository $authorRepository)
     {
-        $this->authorRepository= $authorRepository;
+        $this->authorRepository = $authorRepository;
     }
 
     /**
@@ -42,11 +41,10 @@ class AuthorController extends AbstractController
 
         $authors = new Paginator($query);
 
-
         return $this->render('author/index.html.twig', [
                     'authors' => $authors,
                     'offset' => $offset,
-                    'limit' => $limit
+                    'limit' => $limit,
         ]);
     }
 
@@ -63,21 +61,20 @@ class AuthorController extends AbstractController
     /**
      * @Route("/edit/{id}", name="author_edit", methods={"GET","POST"}, requirements={"id":"\d+"}, defaults={ "id":null})
      */
-    public function edit(Request $request, EntityManagerInterface $em, Author $author = null ): Response
+    public function edit(Request $request, EntityManagerInterface $em, Author $author = null): Response
     {
-        if(!$author){
-            $author = new Author;
+        if (!$author) {
+            $author = new Author();
         }
 
         $form = $this->createForm(AuthorType::class, $author, [
-            'app_mode'=>$request->get('form_mode')
+            'app_mode' => $request->get('form_mode'),
         ]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            if(!$em->contains($author)){
+            if (!$em->contains($author)) {
                 $em->persist($author);
             }
             $em->flush();
@@ -98,7 +95,7 @@ class AuthorController extends AbstractController
      */
     public function delete(Request $request, Author $author): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $author->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$author->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($author);
             $entityManager->flush();
@@ -106,6 +103,4 @@ class AuthorController extends AbstractController
 
         return $this->redirectToRoute('author_index');
     }
-
-    
 }

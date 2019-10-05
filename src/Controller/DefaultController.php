@@ -2,20 +2,19 @@
 
 namespace App\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-     /**
+    /**
      * @Route("/", name="redirect")
      */
     public function redirectAction()
     {
         return $this->redirectToRoute('default');
     }
-    
+
     /**
      * @Route("/hello", name="default")
      */
@@ -25,9 +24,10 @@ class DefaultController extends AbstractController
             'controller_name' => 'DefaultController',
         ]);
     }
-    
-     /**
-      * Single Page application
+
+    /**
+     * Single Page application.
+     *
      * @Route("/spa", name="spa_app")
      */
     public function app()

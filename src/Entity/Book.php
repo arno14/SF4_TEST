@@ -53,14 +53,13 @@ class Book
 
     public function __toString()
     {
-        return (string)$this->getTitle();
+        return (string) $this->getTitle();
     }
-    
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -140,5 +139,4 @@ class Book
 
         return $this;
     }
-
 }

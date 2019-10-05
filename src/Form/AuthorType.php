@@ -27,39 +27,38 @@ class AuthorType extends AbstractType
 
         $builder->get('emails')->addModelTransformer(new ArrayToStringTransformer());
 
-        if( 'include_books_forms' === $options['app_mode']){
-            
+        if ('include_books_forms' === $options['app_mode']) {
             $builder->add('books', CollectionType::class, [
-                'allow_add'=>true,
-                'allow_delete'=>true,
-                'entry_type'=>BookType::class,
-                'entry_options'=>[
-                    'app_mode'=>'inside_author_form',
-                    'empty_data'=>function(Form $form){
+                'allow_add' => true,
+                'allow_delete' => true,
+                'entry_type' => BookType::class,
+                'entry_options' => [
+                    'app_mode' => 'inside_author_form',
+                    'empty_data' => function (Form $form) {
                         $collectionForm = $form->getParent();
                         $authorForm = $collectionForm->getParent();
                         $author = $authorForm->getData();
                         $book = new Book();
                         $book->setAuthor($author);
-                        return $book;
-                    }
-                ],
-                'constraints'=>new Valid()
-            ]);
 
-        }       
+                        return $book;
+                    },
+                ],
+                'constraints' => new Valid(),
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Author::class,
-            'app_mode'=> null
+            'app_mode' => null,
         ]);
-        $resolver->setAllowedValues('app_mode',[
+        $resolver->setAllowedValues('app_mode', [
             null,
             'include_books_forms',
-            'inside_book_form', 
+            'inside_book_form',
         ]);
     }
 }

@@ -42,7 +42,6 @@ class Author
      */
     private $deathDate;
 
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Book", mappedBy="author", cascade="persist")
      */
@@ -51,25 +50,22 @@ class Author
     /**
      * @ORM\Column(type="json_array", nullable=true)
      * @Assert\All({
-     *      @Assert\Email( 
+     *      @Assert\Email(
      *          message = "{{ value }} is not a valid email address"
      *      )
      * })
      */
     private $emails = [];
 
-
-    
     public function __toString()
     {
         return $this->getFirstName().' '.$this->getLastName();
     }
-    
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -117,7 +113,7 @@ class Author
         return $this->deathDate;
     }
 
-    public function setDeathDate(?\DateTimeInterface  $deathDate): self
+    public function setDeathDate(?\DateTimeInterface $deathDate): self
     {
         $this->deathDate = $deathDate;
 
@@ -166,5 +162,4 @@ class Author
 
         return $this;
     }
-
 }

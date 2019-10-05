@@ -34,7 +34,7 @@ class BookController extends AbstractController
             ->setFirstResult($offset);
 
         if ($term = $request->get('term')) {
-            $query->andWhere('b.title LIKE :term')->setParameter('term', '%' . $term . '%');
+            $query->andWhere('b.title LIKE :term')->setParameter('term', '%'.$term.'%');
         }
 
         $books = new Paginator($query, true);
@@ -42,7 +42,7 @@ class BookController extends AbstractController
         return $this->render('book/index.html.twig', [
             'books' => $books,
             'offset' => $offset,
-            'limit' => $limit
+            'limit' => $limit,
         ]);
     }
 
@@ -56,18 +56,17 @@ class BookController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/edit/{id}", name="book_edit", methods={"GET","POST"}, requirements={"id":"\d+"}, defaults={ "id":null} )
      */
     public function edit(Request $request, EntityManagerInterface $em, Book $book = null): Response
     {
         if (!$book) {
-            $book = new Book;
+            $book = new Book();
         }
 
         $form = $this->createForm(BookType::class, $book, [
-            'app_mode' => $request->get('form_mode')
+            'app_mode' => $request->get('form_mode'),
         ]);
 
         // $form = $this->createForm(FormType::class, $book);
@@ -78,12 +77,10 @@ class BookController extends AbstractController
         //     ->add('categories', null, ['expanded' => true])
         //     ;
 
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            if(!$book->getId()){
+            if (!$book->getId()) {
                 $em->persist($book);
             }
 
@@ -105,7 +102,7 @@ class BookController extends AbstractController
      */
     public function delete(Request $request, Book $book): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $book->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$book->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($book);
             $entityManager->flush();

@@ -15,25 +15,23 @@ class DateExtension extends AbstractTypeExtension
         $this->dateFormat = $myDateFormat;
     }
 
-
-    public static function getExtendedTypes():iterable
+    public static function getExtendedTypes(): iterable
     {
         return [
-            DateType::class
+            DateType::class,
         ];
     }
 
     public function configureOptions(OptionsResolver $resolver)
-    { 
-        // return;       
+    {
+        // return;
         $resolver->setDefaults([
-            'html5'=>false,
-            'widget'=>'single_text',
-            'format'=>$this->dateFormat,
-            'attr'=>[
-                'title'=>'Please fill date as format '.$this->dateFormat
-            ]
+            'html5' => false,
+            'widget' => 'single_text',
+            'format' => $this->dateFormat,
+            'attr' => [
+                'title' => 'Please fill date as format '.$this->dateFormat,
+            ],
         ]);
     }
 }
-
