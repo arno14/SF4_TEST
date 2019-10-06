@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Author;
 use App\Entity\Book;
 use App\Form\Transformer\ArrayToStringTransformer;
+use InvalidArgumentException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType as TextType;
@@ -36,7 +37,13 @@ class AuthorType extends AbstractType
                     'app_mode' => 'inside_author_form',
                     'empty_data' => function (Form $form) {
                         $collectionForm = $form->getParent();
+                        if (!$collectionForm) {
+                            throw new InvalidArgumentException('No parent form on BookType');
+                        }
                         $authorForm = $collectionForm->getParent();
+                        if (!$authorForm) {
+                            throw new InvalidArgumentException('No parent form on Book Collection Type');
+                        }
                         $author = $authorForm->getData();
                         $book = new Book();
                         $book->setAuthor($author);

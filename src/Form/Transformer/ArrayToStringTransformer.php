@@ -16,7 +16,7 @@ class ArrayToStringTransformer implements DataTransformerInterface
     /**
      * This method is called when the form field is initialized with its default data.
      *
-     * @param string[] $value The value in the original representation
+     * @param string[] $serverValue The value in the original representation
      *
      * @return string The value in the transformed representation
      */
@@ -31,9 +31,9 @@ class ArrayToStringTransformer implements DataTransformerInterface
      * This method is called when {@link Form::submit()} is called to transform the requests tainted data
      * into an acceptable format.
      *
-     * @param mixed $value The value in the transformed representation
+     * @param string | null $clientValue The value in the transformed representation
      *
-     * @return mixed The value in the original representation
+     * @return array | null The value in the original representation
      */
     public function reverseTransform($clientValue)
     {
