@@ -21,6 +21,6 @@ docker-compose exec -u `echo $UID` node yarn run eslint webpack.config.js
 
 docker-compose exec -u `echo $UID` node yarn run eslint assets/js
 
-docker-compose exec -u `echo $UID` node yarn run eslint assets/js/vue_components/*
+docker-compose exec -u `echo $UID` node yarn run eslint assets/js/components/*
 
 docker-compose exec -u `echo $UID` node yarn run encore production
