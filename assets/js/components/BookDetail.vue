@@ -34,11 +34,15 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   name: 'BookDetail',
-  props: ['book'],
+  props: {
+    book: {
+      type: Object,
+      default: null
+    }
+  },
   data () {
     return {}
   },

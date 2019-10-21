@@ -6,20 +6,19 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'AuthorDetail',
-  props: ['author'],
-  data () {
-    return {
+  props: {
+    author: {
+      type: Object,
+      default: null
     }
   },
-  mounted () {
+  data () {
+    return {}
   },
-  methods: {
-
-  }
+  mounted () {},
+  methods: {}
 }
 </script>
 

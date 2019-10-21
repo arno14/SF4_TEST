@@ -12,7 +12,7 @@
       <b-form
         inline
         class="form-search"
-        @submit.prevent="loadItems()"
+        @submit.prevent="applySearch()"
       >
         <b-input-group class="b-flex title-search">
           <b-form-input
@@ -29,9 +29,13 @@
           <b-list-group-item
             v-for="(item,itemkey) in list"
             :key="itemkey"
-            @click="focusBook(item)"
           >
-            <span v-text="item.title" />
+            <router-link
+              :to="{params:{book_id:item.id}, query:criterias }"
+              replace
+            >
+              <span v-text="item.title" />
+            </router-link>
           </b-list-group-item>
         </b-list-group>
       </div>
@@ -63,27 +67,57 @@ export default {
       focusedBook: null
     }
   },
+  watch: {
+    $route: function (to, from) {
+      if (JSON.stringify(to.query) !== JSON.stringify(from.query)) {
+        this.loadItems()
+      }
+      if (to.params.book_id && to.params.book_id !== from.params.book_id) {
+        this.showBook(to.params.book_id)
+      }
+    }
+  },
   mounted () {
+    this.criterias = this.$route.query || { title: null }
     this.loadItems()
+    if (this.$route.params.book_id) {
+      this.showBook(this.$route.params.book_id)
+    }
   },
   methods: {
+    applySearch () {
+      this.$router.replace({
+        // name: "book",
+        // params:{ book_id: (this.focusedBook)?this.focusedBook.id:null },
+        query: this.criterias
+      })
+    },
     loadItems () {
       this.isLoading = true
       this.totalCount = 0
       this.list = []
-      axios.get('/api/books', { params: this.criterias }).then(response => {
-        this.totalCount = response.data['hydra:totalItems']
-        this.list = response.data['hydra:member']
-        this.isLoading = false
-      })
+      axios
+        .get('/api/books', { params: this.criterias })
+        .then(response => {
+          this.totalCount = response.data['hydra:totalItems']
+          this.list = response.data['hydra:member']
+        })
+        .finally(() => (this.isLoading = false))
     },
-    focusBook (book) {
+    showBook (bookId) {
       this.isLoading = true
-      axios.get(book.author).then(response => {
-        book.authorDetail = response.data
-        this.focusedBook = book
-        this.isLoading = false
-      })
+      var book = null
+      axios
+        .get('/api/books/' + bookId)
+        .then(response => {
+          book = response.data
+          return axios.get(book.author)
+        })
+        .then(response => {
+          book.authorDetail = response.data
+          this.focusedBook = book
+        })
+        .finally(() => (this.isLoading = false))
     }
   }
 }
@@ -95,7 +129,7 @@ export default {
   background: gainsboro;
 }
 .form-search,
-.title-search{
-  width: 100%!important;
+.title-search {
+  width: 100% !important;
 }
 </style>

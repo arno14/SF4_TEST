@@ -13,9 +13,13 @@ require('../css/app.css')
 // Define Route
 Vue.use(VueRouter)
 const router = new VueRouter({
+  // mode: 'history',
+  // base: 'spa',
+  // mode: 'hash',
   routes: [
     { path: '/author', component: AuthorIndex },
     { path: '/book', component: BookIndex },
+    { name: 'book', path: '/book/:book_id', component: BookIndex },
     { path: '/', redirect: '/book' }
   ]
 })
