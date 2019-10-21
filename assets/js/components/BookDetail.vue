@@ -40,15 +40,15 @@ export default {
   props: {
     book: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
-    return {}
+  data() {
+    return {};
   },
-  mounted () {},
-  methods: {}
-}
+  mounted() {},
+  methods: {},
+};
 </script>
 
 <style>

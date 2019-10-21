@@ -50,77 +50,77 @@
 </template>
 
 <script>
-import axios from 'axios'
-import BookDetail from './BookDetail'
+import axios from 'axios';
+import BookDetail from './BookDetail.vue';
 
 export default {
   name: 'BookIndex',
   components: { BookDetail },
-  data () {
+  data() {
     return {
       isLoading: false,
       criterias: {
-        title: null
+        title: null,
       },
       totalCount: null,
       list: [],
-      focusedBook: null
-    }
+      focusedBook: null,
+    };
   },
   watch: {
-    $route: function (to, from) {
+    $route(to, from) {
       if (JSON.stringify(to.query) !== JSON.stringify(from.query)) {
-        this.loadItems()
+        this.loadItems();
       }
       if (to.params.book_id && to.params.book_id !== from.params.book_id) {
-        this.showBook(to.params.book_id)
+        this.showBook(to.params.book_id);
       }
-    }
+    },
   },
-  mounted () {
-    this.criterias = this.$route.query || { title: null }
-    this.loadItems()
+  mounted() {
+    this.criterias = this.$route.query || { title: null };
+    this.loadItems();
     if (this.$route.params.book_id) {
-      this.showBook(this.$route.params.book_id)
+      this.showBook(this.$route.params.book_id);
     }
   },
   methods: {
-    applySearch () {
+    applySearch() {
       this.$router.replace({
         // name: "book",
         // params:{ book_id: (this.focusedBook)?this.focusedBook.id:null },
-        query: this.criterias
-      })
+        query: this.criterias,
+      });
     },
-    loadItems () {
-      this.isLoading = true
-      this.totalCount = 0
-      this.list = []
+    loadItems() {
+      this.isLoading = true;
+      this.totalCount = 0;
+      this.list = [];
       axios
         .get('/api/books', { params: this.criterias })
-        .then(response => {
-          this.totalCount = response.data['hydra:totalItems']
-          this.list = response.data['hydra:member']
+        .then((response) => {
+          this.totalCount = response.data['hydra:totalItems'];
+          this.list = response.data['hydra:member'];
         })
-        .finally(() => (this.isLoading = false))
+        .finally(() => { this.isLoading = false; });
     },
-    showBook (bookId) {
-      this.isLoading = true
-      var book = null
+    showBook(bookId) {
+      this.isLoading = true;
+      let book = null;
       axios
-        .get('/api/books/' + bookId)
-        .then(response => {
-          book = response.data
-          return axios.get(book.author)
+        .get(`/api/books/${bookId}`)
+        .then((response) => {
+          book = response.data;
+          return axios.get(book.author);
         })
-        .then(response => {
-          book.authorDetail = response.data
-          this.focusedBook = book
+        .then((response) => {
+          book.authorDetail = response.data;
+          this.focusedBook = book;
         })
-        .finally(() => (this.isLoading = false))
-    }
-  }
-}
+        .finally(() => { this.isLoading = false; });
+    },
+  },
+};
 </script>
 
 <style >

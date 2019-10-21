@@ -23,18 +23,18 @@
 <script>
 export default {
   name: 'BaseIndex',
-  data () {
+  data() {
     return {
       isLoading: false,
       criterias: {
-        term: null
+        term: null,
       },
       totalCount: null,
-      list: []
-    }
+      list: [],
+    };
   },
-  methods: {}
-}
+  methods: {},
+};
 </script>
 
 <style>

@@ -51,42 +51,42 @@
 </template>
 
 <script>
-import axios from 'axios'
-import AuthorDetail from './AuthorDetail'
+import axios from 'axios';
+import AuthorDetail from './AuthorDetail.vue';
 
 export default {
   name: 'AuthorIndex',
   components: { AuthorDetail },
-  data () {
+  data() {
     return {
       isLoading: false,
       criterias: {
-        term: null
+        term: null,
       },
       totalCount: null,
       list: [],
-      focusedAuthor: null
-    }
+      focusedAuthor: null,
+    };
   },
-  mounted () {
-    this.loadItems()
+  mounted() {
+    this.loadItems();
   },
   methods: {
-    loadItems () {
-      this.isLoading = true
-      this.totalCount = 0
-      this.list = []
-      axios.get('/api/authors', { params: this.criterias }).then(response => {
-        this.totalCount = response.data['hydra:totalItems']
-        this.list = response.data['hydra:member']
-        this.isLoading = false
-      })
+    loadItems() {
+      this.isLoading = true;
+      this.totalCount = 0;
+      this.list = [];
+      axios.get('/api/authors', { params: this.criterias }).then((response) => {
+        this.totalCount = response.data['hydra:totalItems'];
+        this.list = response.data['hydra:member'];
+        this.isLoading = false;
+      });
     },
-    focusAuthor (author) {
-      this.focusedAuthor = author
-    }
-  }
-}
+    focusAuthor(author) {
+      this.focusedAuthor = author;
+    },
+  },
+};
 </script>
 
 <style>
