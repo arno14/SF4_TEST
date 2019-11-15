@@ -4,7 +4,7 @@
     "name": "symfony4/test",
     "description": "Sample app with Symfony4",
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "api-platform/api-pack": "^1.2",
