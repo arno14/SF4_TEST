@@ -26,12 +26,7 @@ class BookController extends AbstractController
         $offset = $request->get('offset', 0);
         $limit = $request->get('limit', 10);
 
-        $query = $bookRepository->createQueryBuilder('b')
-            ->addSelect('a,c')
-            ->leftJoin('b.author', 'a')
-            ->leftJoin('b.categories', 'c')
-            ->setMaxResults($limit)
-            ->setFirstResult($offset);
+        $query = $bookRepository->createQueryBuilderWithAuthorAndCategories($limit, $offset);
 
         if ($term = $request->get('term')) {
             $query->andWhere('b.title LIKE :term')->setParameter('term', '%'.$term.'%');

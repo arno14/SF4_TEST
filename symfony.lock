@@ -163,28 +163,28 @@
         }
     },
     "nette/bootstrap": {
-        "version": "v3.0.0"
+        "version": "v3.0.1"
     },
     "nette/di": {
-        "version": "v3.0.0"
+        "version": "v3.0.1"
     },
     "nette/finder": {
-        "version": "v2.5.0"
+        "version": "v2.5.1"
     },
     "nette/neon": {
         "version": "v3.0.0"
     },
     "nette/php-generator": {
-        "version": "v3.2.2"
+        "version": "v3.2.3"
     },
     "nette/robot-loader": {
         "version": "v3.2.0"
     },
     "nette/schema": {
-        "version": "v1.0.0"
+        "version": "v1.0.1"
     },
     "nette/utils": {
-        "version": "v3.0.1"
+        "version": "v3.0.2"
     },
     "nikic/php-parser": {
         "version": "v4.2.0"
@@ -210,11 +210,20 @@
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
     },
+    "phpstan/extension-installer": {
+        "version": "1.0.3"
+    },
     "phpstan/phpdoc-parser": {
         "version": "0.3.5"
     },
     "phpstan/phpstan": {
-        "version": "0.11.8"
+        "version": "0.11.19"
+    },
+    "phpstan/phpstan-doctrine": {
+        "version": "0.11.6"
+    },
+    "phpstan/phpstan-symfony": {
+        "version": "0.11.6"
     },
     "psr/cache": {
         "version": "1.0.1"

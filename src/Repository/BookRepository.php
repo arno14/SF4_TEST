@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Book;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -19,22 +20,16 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
-    // /**
-    //  * @return Book[] Returns an array of Book objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function createQueryBuilderWithAuthorAndCategories($limit=25, $offset=0):QueryBuilder
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+            ->addSelect('a,c')
+            ->leftJoin('b.author', 'a')
+            ->leftJoin('b.categories', 'c')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset);
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Book
