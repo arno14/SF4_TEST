@@ -59,7 +59,7 @@ export default {
     },
   },
   mounted() {
-    this.criterias = Object.assign({}, this.$route.query)  || { title: null };
+    this.criterias = ({ ...this.$route.query }) || { title: null };
     this.loadItems();
     if (this.$route.params.book_id) {
       this.showBook(this.$route.params.book_id);
@@ -67,9 +67,10 @@ export default {
   },
   methods: {
     applySearch() {
-      //NB ne jamais utilisé l'objet query directement, tjrs faire une copie 
-      // sinon erreur "NavigationDuplicated Navigating to current location (“/search”) is not allowed [vuejs]
-      let query = Object.assign({}, this.criterias);
+      // NB ne jamais utiliser l'objet query directement,
+      // tjrs faire une copie  sinon erreur
+      // "NavigationDuplicated Navigating to current location (“/search”) is not allowed [vuejs]
+      const query = { ...this.criterias };
       this.$router.replace({ query });
     },
     loadItems() {
