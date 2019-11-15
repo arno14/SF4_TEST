@@ -35,9 +35,7 @@ class AuthorController extends AbstractController
         $offset = $request->get('offset', 0);
         $limit = $request->get('limit', 10);
 
-        $query = $this->authorRepository->createQueryBuilder('b')
-                ->setMaxResults($limit)
-                ->setFirstResult($offset);
+        $query = $this->authorRepository->createQueryBuilderWithBooks($limit, $offset);
 
         $authors = new Paginator($query);
 

@@ -7,18 +7,18 @@
 
 <script>
 export default {
-  name: "AuthorDetail",
+  name: 'AuthorDetail',
   props: {
     author: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {};
   },
   mounted() {},
-  methods: {}
+  methods: {},
 };
 </script>
 

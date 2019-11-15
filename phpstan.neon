@@ -1,0 +1,15 @@
+parameters:
+    symfony:
+        container_xml_path: '%rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+        console_application_loader: bin/phpstan/console-application.php    
+    doctrine:
+        objectManagerLoader: bin/phpstan/doctrine-bootstrap.php
+    level:
+        7
+    paths:
+        - src
+        # - bin/phpstan
+    # excludes_analyse:
+    #       somefile
+    # ignore_errors:
+    #       someregexp

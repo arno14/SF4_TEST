@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Author;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -19,32 +20,21 @@ class AuthorRepository extends ServiceEntityRepository
         parent::__construct($registry, Author::class);
     }
 
-    // /**
-    //  * @return Author[] Returns an array of Author objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function createQueryBuilderWithBooks($limit=25, $offset=0):QueryBuilder
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+            ->addSelect('b')
+            ->leftJoin('a.books', 'b')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset);
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Author
+    public function findOneWithBook($id): ?Author
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->getEntityManager()
+        ->createQuery('SELECT a,b FROM App\Entity\Author a JOIN a.books b WHERE a.id = :id')
+        ->setParameter('id',$id)
+        ->getSingleResult();
     }
-    */
 }

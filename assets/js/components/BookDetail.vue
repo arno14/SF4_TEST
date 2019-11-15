@@ -12,7 +12,7 @@
     </div>
     <div>
       published at
-      <strong>{{ book.publicationDate | formatDate('DD/MM/Y') }}</strong>
+      <strong>{{ book.publicationDate | formatDate}}</strong>
     </div>
     <div>
       ISBN:
