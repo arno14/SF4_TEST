@@ -19,7 +19,7 @@ const router = new VueRouter({
   routes: [
     { path: '/author', component: AuthorIndex },
     { path: '/book', component: BookIndex },
-    { name: 'book', path: '/book/:book_id', component: BookIndex },
+    { path: '/book/:book_id', name: 'book_detail', component: BookIndex },
     { path: '/', redirect: '/book' }
   ]
 })
@@ -28,8 +28,11 @@ const router = new VueRouter({
 Vue.use(BootstrapVue)
 
 // Register globally the filter "formatDate"
-Vue.filter('formatDate', function (date) {
-  var format = arguments[1] || 'd/m/Y'
+Vue.filter('formatDate', function(date){
+  if(!date){
+    return null;
+  }
+  let format = arguments[1] || 'L'; // locale format @see https://momentjs.com/docs/#/parsing/string-format/
   return Moment(date).format(format)
 })
 
@@ -43,7 +46,7 @@ const vueApp = new Vue({
 vueApp.$emit('started')
 
 // As webpack Encore hot reload does not support CSS reload, call this function in browser console
-window.reloadCSS = function () {
+window.reloadCSS = ()=> {
   document.querySelectorAll('link').forEach(function (e) {
     var clone = e.cloneNode()
     clone.setAttribute('href', clone.getAttribute('href') + '?v' + new Date().getTime())
