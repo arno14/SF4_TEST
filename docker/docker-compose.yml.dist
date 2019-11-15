@@ -4,38 +4,6 @@
 #   docker-compose exec -u `echo $UID` app /bin/bash
 version: '3'
 services:
-    # not working!
-    nginx:
-        image: nginx:latest       
-        ports:
-            - 8035:80
-        volumes:
-            - ./docker/nginx_conf/default.conf:/etc/nginx/conf.d/default.conf
-    # on port 8034, serve application from container phpfpm
-    apache:
-        image: httpd:2.4
-        ports:
-            - 8034:80
-        volumes:
-            # enable modules proxy_http, proxy_fcgi, etc... 
-            # redirect .php request to phpfpm container port 9000
-            # other requests (for static files as css) are directly hosted by this container
-            - ./docker/apache_fpm_config/httpd.conf:/usr/local/apache2/conf/httpd.conf
-            - ./public:/usr/local/apache2/htdocs/
-    phpfpm:
-        build: ./docker/phpfpm     
-        volumes:
-            - .:/home/app    
-            - /home/$USER:/home/$USER
-            - /etc/passwd:/etc/passwd:ro
-            - /etc/group:/etc/group:ro
-        tmpfs:
-            - /home/var/cache
-        env_file:
-            - .env
-        tty: true
-        working_dir: /home/app
-    # on port 8030, serve application with apache / mod php
     phpapache:     
         build: ./docker/phpapache
         ports:
@@ -56,8 +24,8 @@ services:
             - .env
         tty: true
         working_dir: /home/app
-    node:
-        image: node
+    nodejs:
+        image: node:12.13.0
         ports:
             # if serving asset via webpack dev server
             - 8032:8032
@@ -70,7 +38,11 @@ services:
         tty: true
         working_dir: /home/app
         command: [ "/bin/bash" ]
-    database:
+        environment: 
+            - CHOKIDAR_USEPOLLING=true
+        # non fonctionnel
+        #entrypoint: "yarn encore dev-server --hot --host 0.0.0.0 --port 8032"
+    mysql:
         image: mysql/mysql-server:5.7
         volumes:  
             - ./var/lib_mysql:/var/lib/mysql
@@ -85,3 +57,27 @@ services:
             - 8031:80
         env_file:
             - .env
+    apache:
+        image: httpd:2.4
+        ports:
+            - 8034:80
+        volumes:
+            # enable modules proxy_http, proxy_fcgi, etc... 
+            # redirect .php request to phpfpm container port 9000
+            # other requests (for static files as css) are directly hosted by this container
+            - ./docker/apache_fpm_config/httpd.conf:/usr/local/apache2/conf/httpd.conf
+            # public files are served directly by apache
+            - ./public:/usr/local/apache2/htdocs/
+    phpfpm:
+        build: ./docker/phpfpm     
+        volumes:
+            - .:/home/app    
+            - /home/$USER:/home/$USER
+            - /etc/passwd:/etc/passwd:ro
+            - /etc/group:/etc/group:ro
+        tmpfs:
+            - /home/var/cache
+        env_file:
+            - .env
+        tty: true
+        working_dir: /home/app
