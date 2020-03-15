@@ -18,10 +18,10 @@ RUN curl --silent --show-error https://getcomposer.org/installer | php  && \
 ENV PHP_DATETIME_ZONE Europe/Paris
 ENV PHP_MEMORY_LIMIT  128M
 ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS  1
-RUN echo "date.timezone = ${PHP_DATETIME_ZONE}" > /usr/local/etc/php/php.ini && \
-    echo "memory_limit = ${PHP_MEMORY_LIMIT}" >> /usr/local/etc/php/php.ini && \
-    echo "opcache.validate_timestamps = ${PHP_OPCACHE_VALIDATE_TIMESTAMPS}"  >> /usr/local/etc/php/php.ini && \
-    echo "short_open_tag = off" >> /usr/local/etc/php/php.ini
+RUN echo 'date.timezone = ${PHP_DATETIME_ZONE}' > /usr/local/etc/php/php.ini && \
+    echo 'memory_limit = ${PHP_MEMORY_LIMIT}' >> /usr/local/etc/php/php.ini && \
+    echo 'opcache.validate_timestamps = ${PHP_OPCACHE_VALIDATE_TIMESTAMPS}'  >> /usr/local/etc/php/php.ini && \
+    echo 'short_open_tag = off' >> /usr/local/etc/php/php.ini
 
 
 RUN a2enmod rewrite
