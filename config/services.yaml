@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-    profiler_toolbar: false
+    profiler_toolbar: "%env(bool:SF_PROFILER_TOOLBAR)"
 
 services:
     # default configuration for services in *this* file
