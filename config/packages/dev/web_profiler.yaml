@@ -1,6 +1,6 @@
 web_profiler:
-    #  Environment variables "bool:SF_PROFILER_TOOLBAR" are never used. Please, check your container's configuration.
-    toolbar: "%env(bool:SF_PROFILER_TOOLBAR)%"
+    #  Invalid type for path "web_profiler.toolbar". Expected "bool", but got "string".
+    toolbar: "%env(boolean:SF_PROFILER_TOOLBAR)%"
     intercept_redirects: false
 
 framework:
