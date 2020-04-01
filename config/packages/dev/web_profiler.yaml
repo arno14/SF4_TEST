@@ -1,5 +1,6 @@
 web_profiler:
-    toolbar: true
+    #  Environment variables "bool:SF_PROFILER_TOOLBAR" are never used. Please, check your container's configuration.
+    toolbar: "%env(bool:SF_PROFILER_TOOLBAR)%"
     intercept_redirects: false
 
 framework:
