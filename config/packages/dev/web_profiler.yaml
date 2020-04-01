@@ -1,6 +1,6 @@
 web_profiler:
-    #  Invalid type for path "web_profiler.toolbar". Expected "bool", but got "string".
-    toolbar: "%env(boolean:SF_PROFILER_TOOLBAR)%"
+    #  It works
+    toolbar: "%profiler_toolbar%"
     intercept_redirects: false
 
 framework:
