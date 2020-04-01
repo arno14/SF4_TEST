@@ -29,3 +29,6 @@ doctrine_test/vendor
 bin/.phpunit
 
 .vscode/
+
+
+node_modules
