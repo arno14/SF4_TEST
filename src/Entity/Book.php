@@ -3,17 +3,17 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
- * @ApiResource
- * @ApiFilter(SearchFilter::class, properties={"title":"partial"})
+ *
+ * @ApiFilter(ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter::class, properties={"title":"partial"})
  */
 class Book
 {
@@ -21,33 +21,39 @@ class Book
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"book"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"book"})
      */
     private $title;
 
     /**
      * @Assert\NotNull
      * @ORM\Column(type="date")
+     * @Groups({"book"})
      */
     private $publicationDate;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"book"})
      */
     private $ISBN;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy="books")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"book_author"})
      */
     private $author;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category")
+     * @Groups({"book_categories"})
      */
     private $categories;
 
@@ -85,6 +91,12 @@ class Book
 
     public function setPublicationDate(\DateTimeInterface $publicationDate = null): self
     {
+        if ($this->publicationDate instanceof DateTime && $publicationDate instanceof DateTime) {
+            if ($this->publicationDate->format('Y-m-d') === $publicationDate->format('Y-m-d')) {
+                return $this;
+            }
+        }
+
         $this->publicationDate = $publicationDate;
 
         return $this;

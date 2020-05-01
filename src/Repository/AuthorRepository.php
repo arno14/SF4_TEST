@@ -20,21 +20,20 @@ class AuthorRepository extends ServiceEntityRepository
         parent::__construct($registry, Author::class);
     }
 
-    public function createQueryBuilderWithBooks($limit=25, $offset=0):QueryBuilder
+    public function createQueryBuilderWithBooks($limit = 25, $offset = 0): QueryBuilder
     {
         return $this->createQueryBuilder('a')
             ->addSelect('b')
             ->leftJoin('a.books', 'b')
             ->setMaxResults($limit)
             ->setFirstResult($offset);
-        ;
     }
 
     public function findOneWithBook($id): ?Author
     {
         return $this->getEntityManager()
         ->createQuery('SELECT a,b FROM App\Entity\Author a JOIN a.books b WHERE a.id = :id')
-        ->setParameter('id',$id)
+        ->setParameter('id', $id)
         ->getSingleResult();
     }
 }

@@ -12,6 +12,5 @@ if(!$em){
     echo 'NO ENTITY MANAGER!!!';
     return null;
 }
-echo 'EM FOUND!!!';
 
 return $em;

@@ -1,0 +1,58 @@
+# !Important!
+# Clear the symfony cache if you modify this file
+#
+resources:
+
+  App\Entity\Author:
+    # shortName: "auteur" 
+    # description: "gestion des auteurs"
+    # attributes:
+    #   pagination_items_per_page: 25  
+    collectionOperations:
+      get:
+        normalization_context:
+          groups: [author]
+      post: 
+        denormalization_context:
+          groups: [author]
+    itemOperations:
+      get:
+        normalization_context:
+          groups: ["author","author_books", "book", "book_categories", "category"]
+      patch: 
+        denormalization_context:
+          groups: [author]
+      delete: ~
+
+  App\Entity\Book:
+    collectionOperations:
+      get:
+        normalization_context:
+          groups: [book]
+      # getfull:
+      #   description: "Retrieve the collection of Book with its author and categories"
+      #   path: '/books/full'
+      #   method: GET
+      #   normalization_context:
+      #     groups: ["book", "book_author", "author", "book_categories","category"]
+      post:
+        denormalization_context:
+          groups: [book, book_categories]
+    itemOperations:
+      get:
+        normalization_context:
+          groups: ["book", "book_author", "author", "book_categories","category"]
+      patch:
+        denormalization_context:
+          groups: [book,"book_author",book_categories]       
+        normalization_context:
+          groups: ["book", "book_author", "author", "book_categories","category"]
+      delete: ~
+
+  App\Entity\Category:
+    collectionOperations:
+      get: 
+        normalization_context:
+          groups: ["category"]
+    itemOperations:
+      get: ~
