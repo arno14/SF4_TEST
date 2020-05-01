@@ -2,13 +2,14 @@
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import BootstrapVue from 'bootstrap-vue';
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import Moment from 'moment';
+import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 
 import AuthorIndex from './components/AuthorIndex.vue';
 import BookIndex from './components/BookIndex.vue';
 
-require('../css/app.css');
+require('../css/app.scss');
 
 // Define Route
 Vue.use(VueRouter);
@@ -26,6 +27,9 @@ const router = new VueRouter({
 
 // register globally Bootstrap vue , all components "b-*" will be availables
 Vue.use(BootstrapVue);
+Vue.use(BootstrapVueIcons);
+
+Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead);
 
 // Register globally the filter "formatDate"
 // locale format @see https://momentjs.com/docs/#/parsing/string-format/
