@@ -1,14 +1,11 @@
 <template>
   <div id="book-index" class="row">
     <div class="col-12">
-      <span style="font-weight:bold;font-size:1.5em;">Book list</span>
+      <span style="font-weight: bold; font-size: 1.5em;">Book list</span>
       <span>{{ totalCount }} results</span>
       <span v-if="countLoading" class="float-right"
-        ><b-icon
-          icon="arrow-clockwise"
-          animation="spin"
-          font-scale="1"
-        /> {{countLoading}} loading...
+        ><b-icon icon="arrow-clockwise" animation="spin" font-scale="1" />
+        {{ countLoading }} loading...
       </span>
     </div>
     <div class="col-6">
@@ -40,15 +37,15 @@
 </template>
 
 <script>
-import http from "../http";
-import BookDetail from "./BookDetail.vue";
+import http from '../http';
+import BookDetail from './BookDetail.vue';
 
 export default {
-  name: "BookIndex",
+  name: 'BookIndex',
   components: { BookDetail },
   data() {
     return {
-      countLoading:0,
+      countLoading: 0,
       criterias: {
         title: null,
       },
@@ -90,8 +87,8 @@ export default {
       this.list = [];
 
       const queryParameters = this.criterias;
-      queryParameters.includes = "book_author,author";
-      http.getList("/api/books", queryParameters).then((resp) => {
+      queryParameters.includes = 'book_author,author';
+      http.getList('/api/books', queryParameters).then((resp) => {
         this.totalCount = resp.totalItems;
         this.list = resp.member;
       });
@@ -99,10 +96,10 @@ export default {
     showBook(bookId) {
       let uri = null;
       if (!bookId) {
-        throw new Error("no book id");
+        throw new Error('no book id');
       }
-      if (bookId["@id"]) {
-        uri = bookId["@id"];
+      if (bookId['@id']) {
+        uri = bookId['@id'];
       } else {
         uri = `/api/books/${bookId}`;
       }
@@ -113,7 +110,7 @@ export default {
     },
     saveBook(book) {
       http.save(book).then((savedBook) => {
-        const index = this.list.findIndex((o) => o["@id"] === savedBook["@id"]);
+        const index = this.list.findIndex((o) => o['@id'] === savedBook['@id']);
         this.list[index] = savedBook;
         this.showBook(savedBook.id);
       });

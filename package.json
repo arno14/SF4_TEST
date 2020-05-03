@@ -15,14 +15,13 @@
   },
   "devDependencies": {
     "@symfony/webpack-encore": "^0.28.0",
-    "eslint": "^6.5.1",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "eslint-plugin-vue": "^5.2.3",
+    "eslint": "^6.8",
+    "prettier": "^2.0.5",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
     "node-sass": "^4.14.0",
     "retire": "^2.0.3",
     "sass-loader": "^7.0.1",
@@ -34,6 +33,6 @@
     "watch": "encore dev --watch",
     "build": "encore production --progress",
     "eslint": "eslint",
-    "eslint-fix": "eslint assets --fix"
+    "eslint-fix": "eslint --fix assets/js assets/js/components/*.vue webpack.config.js "
   }
 }

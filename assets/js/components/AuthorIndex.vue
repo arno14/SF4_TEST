@@ -2,21 +2,11 @@
   <div id="author-index">
     <div class="row">
       <div class="col-6">
-        <form
-          class="form form-inline"
-          @submit.prevent="loadItems()"
-        >
+        <form class="form form-inline" @submit.prevent="loadItems()">
           <div class="input-group">
-            <input
-              v-model="criterias.term"
-              type="text"
-              class="form-control"
-            >
+            <input v-model="criterias.term" type="text" class="form-control" />
             <div class="input-group-append">
-              <button
-                class="btn btn-outline-secondary"
-                type="submit"
-              >
+              <button class="btn btn-outline-secondary" type="submit">
                 Search
               </button>
             </div>
@@ -26,12 +16,10 @@
           <div v-if="isLoading">
             Loading...
           </div>
-          <div v-if="!isLoading">
-            {{ totalCount }} results
-          </div>
+          <div v-if="!isLoading">{{ totalCount }} results</div>
           <ul>
             <li
-              v-for="(item,itemkey) in list"
+              v-for="(item, itemkey) in list"
               :key="itemkey"
               @click="focusAuthor(item)"
             >
@@ -89,5 +77,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

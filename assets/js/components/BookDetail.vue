@@ -35,9 +35,9 @@
       </div>
       <div>
         Published at
-        <strong>{{
-          book.publicationDate | formatDate("ddd DD MMM YYYY")
-        }}</strong>
+        <strong>
+          {{ book.publicationDate | formatDate('ddd DD MMM YYYY') }}
+        </strong>
       </div>
       <div>
         ISBN:
@@ -57,7 +57,8 @@
     </div>
     <div v-if="isEditMode">
       <div>
-        Author: <strong v-text="book.author.firstName" />
+        Author:
+        <strong v-text="book.author.firstName" />
         <strong v-text="book.author.lastName" />
         #{{ book.author.id }}
         <vue-bootstrap-typeahead
@@ -99,11 +100,10 @@
 </template>
 
 <script>
-import _ from "underscore";
-import http from "../http";
+import http from '../http';
 
 export default {
-  name: "BookDetail",
+  name: 'BookDetail',
   props: {
     book: {
       type: Object,
@@ -116,7 +116,7 @@ export default {
   data() {
     return {
       isEditMode: false,
-      authorSearch: "",
+      authorSearch: '',
       availableAuthors: [],
       availableCategories: null,
       bookCategoriesIds: [],
@@ -129,7 +129,7 @@ export default {
     book(book) {
       this.authorSearch = book.author.lastName;
       if (book && this.book && this.book.id === book.id) {
-        this.isEditMode = false; //post submit, back to show view
+        this.isEditMode = false; // post submit, back to show view
       }
       this.computeBookCategoriesIds();
     },
@@ -137,26 +137,26 @@ export default {
   methods: {
     loadAuthors() {
       http
-        .getList("/api/authors", { lastName: this.authorSearch })
+        .getList('/api/authors', { lastName: this.authorSearch })
         .then((resp) => {
           this.availableAuthors = resp.member;
         });
     },
     computeBookCategoriesIds() {
-      if (null === this.availableCategories) {
-        http.getList("/api/categories").then((resp) => {
+      if (this.availableCategories === null) {
+        http.getList('/api/categories').then((resp) => {
           this.availableCategories = resp.member;
           this.computeBookCategoriesIds();
         });
       } else if (this.book) {
-        this.bookCategoriesIds = this.book.categories.map((c) => c["@id"]);
+        this.bookCategoriesIds = this.book.categories.map((c) => c['@id']);
       }
     },
     submit() {
-      let book = this.book;
-      book.author = book.author["@id"];
+      const { book } = this;
+      book.author = book.author['@id'];
       book.categories = this.bookCategoriesIds;
-      this.$emit("saveBook", book);
+      this.$emit('saveBook', book);
     },
   },
 };

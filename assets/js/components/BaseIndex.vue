@@ -1,7 +1,7 @@
 <template>
   <div id="base-index">
     <div class="col-12">
-      <span style="font-weight:bold;font-size:1.5em;">Book list</span>
+      <span style="font-weight: bold; font-size: 1.5em;">Book list</span>
       <span v-if="isLoading">Loading...</span>
       <span v-if="!isLoading">{{ totalCount }} results</span>
     </div>
@@ -37,5 +37,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

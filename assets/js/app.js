@@ -53,7 +53,10 @@ vueApp.$emit('started');
 window.reloadCSS = () => {
   document.querySelectorAll('link').forEach((e) => {
     const clone = e.cloneNode();
-    clone.setAttribute('href', `${clone.getAttribute('href')}?v${new Date().getTime()}`);
+    clone.setAttribute(
+      'href',
+      `${clone.getAttribute('href')}?v${new Date().getTime()}`,
+    );
     e.parentNode.insertBefore(clone, e);
     setTimeout(() => {
       e.remove();
