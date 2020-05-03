@@ -66,5 +66,3 @@ services:
             - .env
         ports:
             - 8031:80
-        env_file:
-            - .env

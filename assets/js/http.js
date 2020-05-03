@@ -1,23 +1,42 @@
 import axios from 'axios';
 
 const http = {
+  countLoading: 0,
+  onCountLoadingChangeFunction: () => {},
+  onCountLoadingChange(callbackFunction) {
+    this.onCountLoadingChangeFunction = callbackFunction;
+  },
+  request(method, uri, axiosConfig = {}) {
+    const config = axiosConfig;
+    config.url = uri;
+    config.method = method;
+    this.countLoading += 1;
+    this.onCountLoadingChangeFunction(this.countLoading);
+    return axios.request(config).finally(() => {
+      this.countLoading -= 1;
+      this.onCountLoadingChangeFunction(this.countLoading);
+    });
+  },
   get(uri, params) {
-    return axios.get(uri, { params }).then((resp) => resp.data);
+    return this.request('GET', uri, { params }).then((resp) => resp.data);
   },
   getList(uri, params) {
-    return axios.get(uri, { params }).then((resp) => ({
-      totalItems: resp.data['hydra:totalItems'],
-      member: resp.data['hydra:member'],
+    return this.get(uri, { params }).then((data) => ({
+      totalItems: data['hydra:totalItems'],
+      member: data['hydra:member'],
     }));
   },
   patch(object) {
     const uri = object['@id'];
-    return axios.patch(uri, object, {
+    const axiosConfig = {
       headers: {
         accept: 'application/ld+json',
         'Content-Type': 'application/merge-patch+json',
       },
-    });
+    };
+    axiosConfig.data = object;
+
+    return this.request('PATCH', uri, axiosConfig);
   },
   save(object) {
     if (object['@id']) {

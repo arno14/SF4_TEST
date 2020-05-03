@@ -2,8 +2,14 @@
   <div id="book-index" class="row">
     <div class="col-12">
       <span style="font-weight:bold;font-size:1.5em;">Book list</span>
-      <span v-if="isLoading">Loading...</span>
-      <span v-if="!isLoading">{{ totalCount }} results</span>
+      <span>{{ totalCount }} results</span>
+      <span v-if="countLoading" class="float-right"
+        ><b-icon
+          icon="arrow-clockwise"
+          animation="spin"
+          font-scale="1"
+        /> {{countLoading}} loading...
+      </span>
     </div>
     <div class="col-6">
       <b-form inline class="form-search" @submit.prevent="applySearch()">
@@ -42,7 +48,7 @@ export default {
   components: { BookDetail },
   data() {
     return {
-      isLoading: false,
+      countLoading:0,
       criterias: {
         title: null,
       },
@@ -62,6 +68,9 @@ export default {
     },
   },
   mounted() {
+    http.onCountLoadingChange((countLoading) => {
+      this.countLoading = countLoading;
+    });
     this.criterias = { ...this.$route.query } || { title: null };
     this.loadItems();
     if (this.$route.params.book_id) {
@@ -77,24 +86,18 @@ export default {
       this.$router.replace({ query });
     },
     loadItems() {
-      this.isLoading = true;
       this.totalCount = 0;
       this.list = [];
 
       const queryParameters = this.criterias;
       queryParameters.includes = "book_author,author";
-      http
-        .getList("/api/books", queryParameters)
-        .then((resp) => {
-          this.totalCount = resp.totalItems;
-          this.list = resp.member;
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
+      http.getList("/api/books", queryParameters).then((resp) => {
+        this.totalCount = resp.totalItems;
+        this.list = resp.member;
+      });
     },
     showBook(bookId) {
-      var uri =null;
+      let uri = null;
       if (!bookId) {
         throw new Error("no book id");
       }
@@ -103,22 +106,16 @@ export default {
       } else {
         uri = `/api/books/${bookId}`;
       }
-      this.isLoading = true;
-      http
-        .get(uri)
-        .then((book) => {
-          this.focusedBook = book;
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
+      return http.get(uri).then((book) => {
+        this.focusedBook = book;
+        return book;
+      });
     },
     saveBook(book) {
       http.save(book).then((savedBook) => {
         const index = this.list.findIndex((o) => o["@id"] === savedBook["@id"]);
-        this.showBook(savedBook).then((updatedBook) => {
-          this.list[index] = updatedBook;
-        });
+        this.list[index] = savedBook;
+        this.showBook(savedBook.id);
       });
     },
   },

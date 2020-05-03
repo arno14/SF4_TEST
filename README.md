@@ -22,9 +22,9 @@ docker-compose exec -u `echo $UID` php bin/console hautelook:fixtures:load
 
 docker-compose exec -u `echo $UID` node yarn install
 
-docker-compose exec -u `echo $UID` node yarn encore dev --watch
+docker-compose exec -u `echo $UID` node yarn run encore dev --watch
 # or
-docker-compose exec -u `echo $UID` node yarn encore dev-server --hot --host 0.0.0.0 --port 8032
+docker-compose exec -u `echo $UID` node yarn run encore dev-server --hot --host 0.0.0.0 --port 8032
 
 ```
 
