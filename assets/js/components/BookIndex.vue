@@ -119,13 +119,10 @@ export default {
 };
 </script>
 
-<style>
-#app {
-  /* background#2b81af; */
-  background: gainsboro;
-}
-.form-search,
-.title-search {
-  width: 100% !important;
+<style lang="scss">
+#book-index {
+  .form-search .title-search {
+    width: 100% !important;
+  }
 }
 </style>

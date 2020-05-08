@@ -6,23 +6,15 @@
   >
     <template v-slot:header>
       <div v-if="!isEditMode">
-        <b-icon
-          icon="pencil"
-          @click="isEditMode = true"
-          class="float-right"
-          title="Edit"
-          variant="success"
-        />
+        <span class="icon-top" title="Edit">
+          <b-icon icon="pencil" @click="isEditMode = true" />
+        </span>
         <h4 v-if="!isEditMode" class="mb-0">{{ book.title }}</h4>
       </div>
       <div v-if="isEditMode">
-        <b-icon
-          icon="backspace"
-          @click="isEditMode = false"
-          class="float-right"
-          title="Abort"
-          variant="success"
-        />
+        <span class="icon-top" title="Abort">
+          <b-icon icon="backspace" @click="isEditMode = false" />
+        </span>
         <b-form-input v-model="book.title" size="sm" />
       </div>
     </template>
@@ -162,9 +154,20 @@ export default {
 };
 </script>
 
-<style>
-#app {
-  /* background#2b81af; */
-  background: red;
+<style lang="scss">
+#book-detail .icon-top {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1px;
+  background: black;
+  border-bottom-left-radius: 4px;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  cursor: pointer;
+  svg {
+    color: white;
+  }
 }
 </style>
