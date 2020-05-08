@@ -10,7 +10,7 @@ RUN apt-get update && \
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/bin/
 
-RUN install-php-extensions zip intl pdo_mysql
+RUN install-php-extensions zip intl pdo_mysql opcache
 
 # install composer
 RUN curl --silent --show-error https://getcomposer.org/installer | php  && \
