@@ -20,8 +20,8 @@ const http = {
   get(uri, params) {
     return this.request('GET', uri, { params }).then((resp) => resp.data);
   },
-  getList(uri, params) {
-    return this.get(uri, { params }).then((data) => ({
+  getList(uri, params = {}) {
+    return this.get(uri, params).then((data) => ({
       totalItems: data['hydra:totalItems'],
       member: data['hydra:member'],
     }));

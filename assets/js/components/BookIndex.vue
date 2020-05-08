@@ -57,7 +57,7 @@ export default {
   watch: {
     $route(to, from) {
       if (JSON.stringify(to.query) !== JSON.stringify(from.query)) {
-        this.loadItems();
+        this.loadBooks();
       }
       if (to.params.book_id && to.params.book_id !== from.params.book_id) {
         this.showBook(to.params.book_id);
@@ -69,7 +69,7 @@ export default {
       this.countLoading = countLoading;
     });
     this.criterias = { ...this.$route.query } || { title: null };
-    this.loadItems();
+    this.loadBooks();
     if (this.$route.params.book_id) {
       this.showBook(this.$route.params.book_id);
     }
@@ -82,7 +82,7 @@ export default {
       const query = { ...this.criterias };
       this.$router.replace({ query });
     },
-    loadItems() {
+    loadBooks() {
       this.totalCount = 0;
       this.list = [];
 
