@@ -2,7 +2,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "axios": "^0.19",
+    "axios": "^0.21",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.13.0",
     "moment": "^2.24.0",
